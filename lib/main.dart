@@ -28,7 +28,7 @@ class EraseRestoreScreen extends StatefulWidget {
 }
 
 class _EraseRestoreScreenState extends State<EraseRestoreScreen> {
-  double stokeWidth = 20;
+  double stokeWidth = 100;
 
   Future<EraseModel?> _getModel() async {
     final clipBuffer = await rootBundle.load('assets/images/clip.png');
@@ -54,10 +54,7 @@ class _EraseRestoreScreenState extends State<EraseRestoreScreen> {
               if (!snapshot.hasData) return const SizedBox.shrink();
               final data = snapshot.data;
               if (data == null) return const SizedBox.shrink();
-              return EraseRestoreView(
-                model: data,
-                maskColor: const Color.fromARGB(74, 248, 13, 35),
-              );
+              return EraseView(model: data);
             },
           ),
         ],

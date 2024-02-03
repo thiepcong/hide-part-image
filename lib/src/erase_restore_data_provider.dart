@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'models.dart';
 
 class EraseRestoreData extends InheritedWidget {
-  final EditType editType;
-  final List<EraseRestoreLinePath> lineList;
+  final List<EraseLinePath> lineList;
   final double strokeWidth;
-  final List<EraseRestoreLinePath> restoreLineList;
+  final List<EraseLinePath> restoreLineList;
 
   const EraseRestoreData({
     super.key,
-    required this.editType,
     required this.lineList,
     required this.strokeWidth,
     required this.restoreLineList,
@@ -23,14 +21,11 @@ class EraseRestoreData extends InheritedWidget {
 
   @override
   bool updateShouldNotify(EraseRestoreData oldWidget) {
-    final editTypeNotEqual = oldWidget.editType != editType;
     final strokeWidthNotEqual = oldWidget.strokeWidth != strokeWidth;
     final lineListNotEqual = oldWidget.lineList.hashCode != lineList.hashCode;
     final lineListLengthNotEqual = oldWidget.lineList.length != lineList.length;
-    final shouldNotify = editTypeNotEqual ||
-        strokeWidthNotEqual ||
-        lineListNotEqual ||
-        lineListLengthNotEqual;
+    final shouldNotify =
+        strokeWidthNotEqual || lineListNotEqual || lineListLengthNotEqual;
     return shouldNotify;
   }
 }
@@ -57,20 +52,18 @@ class EraseRestoreDataProvider extends StatefulWidget {
 }
 
 class EraseRestoreDataProviderState extends State<EraseRestoreDataProvider> {
-  EditType _editType = EditType.erase;
-  List<EraseRestoreLinePath> _lineList = [];
+  List<EraseLinePath> _lineList = [];
   double _strokeWidth = 20;
-  List<EraseRestoreLinePath> _restoreLineList = [];
+  List<EraseLinePath> _restoreLineList = [];
 
-  EraseRestoreLinePath _currentPath = EraseRestoreLinePath(drawPoints: []);
+  EraseLinePath _currentPath = EraseLinePath(drawPoints: []);
 
   void startEdit(Offset position) {
-    _currentPath = EraseRestoreLinePath(
+    _currentPath = EraseLinePath(
       drawPoints: [position],
-      type: _editType,
       strokeWidth: _strokeWidth,
     );
-    List<EraseRestoreLinePath> tempList = List.from(_lineList);
+    List<EraseLinePath> tempList = List.from(_lineList);
     tempList.add(_currentPath);
     _restoreLineList = [];
     setState(() {
@@ -80,7 +73,7 @@ class EraseRestoreDataProviderState extends State<EraseRestoreDataProvider> {
 
   void updateEdit(Offset position) {
     _currentPath.drawPoints.add(position);
-    List<EraseRestoreLinePath> tempList = List.from(_lineList);
+    List<EraseLinePath> tempList = List.from(_lineList);
     tempList.last = _currentPath;
     setState(() {
       _lineList = tempList;
@@ -93,7 +86,7 @@ class EraseRestoreDataProviderState extends State<EraseRestoreDataProvider> {
   }
 
   void previousStep() {
-    final tempList = List<EraseRestoreLinePath>.from(_lineList);
+    final tempList = List<EraseLinePath>.from(_lineList);
     if (tempList.isEmpty) return;
     final lastItem = tempList.last;
     _restoreLineList.add(lastItem);
@@ -107,19 +100,13 @@ class EraseRestoreDataProviderState extends State<EraseRestoreDataProvider> {
   void nextStep() {
     if (_restoreLineList.isEmpty) return;
     final lastItem = _restoreLineList.last;
-    final tempList = List<EraseRestoreLinePath>.from(_lineList);
+    final tempList = List<EraseLinePath>.from(_lineList);
     tempList.add(lastItem);
     _restoreLineList.removeLast();
     setState(() {
       _lineList = tempList;
     });
     endEdit();
-  }
-
-  void updateEditType(EditType type) {
-    setState(() {
-      _editType = type;
-    });
   }
 
   void updateStokeWidth(double width) {
@@ -131,7 +118,6 @@ class EraseRestoreDataProviderState extends State<EraseRestoreDataProvider> {
   @override
   Widget build(BuildContext context) {
     return EraseRestoreData(
-      editType: _editType,
       lineList: _lineList,
       strokeWidth: _strokeWidth,
       restoreLineList: _restoreLineList,

@@ -24,27 +24,3 @@ class ImagePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant ImagePainter oldDelegate) => true;
 }
-
-// class ColorPainter extends CustomPainter {
-//   final Color color;
-//   final BlendMode blendMode;
-
-//   ColorPainter({
-//     required this.color,
-//     this.blendMode = BlendMode.srcOver,
-//   });
-
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     canvas.drawRect(
-//       Offset.zero & size,
-//       Paint()
-//         ..color = color
-//         ..blendMode = blendMode,
-//     );
-//   }
-
-//   @override
-//   bool shouldRepaint(covariant ColorPainter oldDelegate) =>
-//       color != oldDelegate.color || blendMode != oldDelegate.blendMode;
-// }

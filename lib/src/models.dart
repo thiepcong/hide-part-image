@@ -5,43 +5,20 @@ import 'package:flutter/material.dart';
 
 import 'image_processor.dart';
 
-enum EditType {
-  erase,
-  restore,
-}
-
-class EraseRestoreLinePath {
+class EraseLinePath {
   final List<Offset> drawPoints;
-  final EditType type;
   final double strokeWidth;
 
-  EraseRestoreLinePath({
+  EraseLinePath({
     required this.drawPoints,
-    this.type = EditType.erase,
     this.strokeWidth = 20,
   });
 }
 
-class EraseRestoreModel {
-  // 裁剪图
+class EraseModel {
   final ui.Image clipImage;
-  // 原图
-  final ui.Image originalImage;
-  // 背景图
-  final ui.Image bgImage;
-  // 遮罩图
-  final ui.Image maskImage;
 
-  EraseRestoreModel({
-    // required this.clipImageBytes,
-    required this.clipImage,
-    // required this.origImageBytes,
-    required this.originalImage,
-    // required this.bgImageBytes,
-    required this.bgImage,
-    // required this.maskImageBytes,
-    required this.maskImage,
-  });
+  EraseModel({required this.clipImage});
 
   static Future<ImageData?> getMaskImageData(Uint8List imageBytes) async {
     final maskImageData = await ImageProcessor.getImageProcessByRGBA(

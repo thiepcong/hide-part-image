@@ -29,29 +29,3 @@ class ImagePaint extends StatelessWidget {
     );
   }
 }
-
-// class ColorPaint extends StatelessWidget {
-//   final Color color;
-//   final BlendMode blendMode;
-
-//   final Widget? child;
-//   const ColorPaint({
-//     Key? key,
-//     required this.color,
-//     this.blendMode = BlendMode.srcOver,
-//     this.child,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return CustomPaint(
-//       isComplex: true,
-//       willChange: true,
-//       foregroundPainter: ColorPainter(
-//         color: color,
-//         blendMode: blendMode,
-//       ),
-//       child: child,
-//     );
-//   }
-// }

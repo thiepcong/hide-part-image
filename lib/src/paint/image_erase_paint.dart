@@ -4,7 +4,7 @@ import '../models.dart';
 import '../painter/image_path_painter.dart';
 
 class ImageErasePaint extends StatelessWidget {
-  final List<EraseRestoreLinePath> canvasPaths;
+  final List<EraseLinePath> canvasPaths;
 
   const ImageErasePaint({
     Key? key,
@@ -16,10 +16,7 @@ class ImageErasePaint extends StatelessWidget {
     return CustomPaint(
       isComplex: true,
       willChange: true,
-      painter: ImagePathPainter(
-        canvasPaths: canvasPaths,
-        isRestore: false,
-      ),
+      painter: ImagePathPainter(canvasPaths: canvasPaths),
     );
   }
 }
